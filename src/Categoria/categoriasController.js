@@ -25,14 +25,36 @@ router.get('/categorias/:id', async (req,res) => {
 })
 
 router.post('/categorias', async (req, res) => {
-  const {nome} = req.body
+  const {nome} = req.body.data
 
   const novaCategoria = {
     nome: nome,
   }
 
   Categoria.create(novaCategoria)
-  res.json({message: 'Categoria cadastrada.'})
+  res.status(200).json({message: 'Usuário cadastrado'})
+})
+
+router.put('/categorias/:id', async (req, res) => {
+    const id = req.params.id
+
+    const categoria = await Categoria.findOne({_id: id})
+
+    const {nome} = req.body
+
+    categoria.nome = nome
+
+    await Categoria.updateOne({_id: id}, categoria)
+
+    res.status(200).json(categoria)
+  })
+
+router.delete('/categorias/:id', async (req, res) => {
+    const id = req.params.id
+
+    const categoria = await Categoria.deleteOne({_id: id})
+
+    res.status(200).json(categoria)
 })
 
 module.exports = router

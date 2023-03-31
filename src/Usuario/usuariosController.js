@@ -1,6 +1,8 @@
 const express = require('express')
 const cors = require('cors')
 const router = express.Router()
+const bcrypt = require('bcrypt')
+
 
 router.use(express.json())
 router.use(cors())
@@ -8,9 +10,9 @@ router.use(cors())
 const Usuario = require('../../models/Usuario')
 
 router.post('/usuarios', async (req, res) => {
-    console.log("ENTROOOOOUUUUUUUUUUUUUUUUUUUUUUUUUUUUU")
     const {nome, email, senha} = req.body.data
-
+    // salt = bcrypt.genSalt(12)
+    // senhaHash = await bcrypt.hash(senha, salt)
     const novoUsuario = {
       nome: nome,
       email: email,
@@ -18,25 +20,38 @@ router.post('/usuarios', async (req, res) => {
     }
   
     Usuario.create(novoUsuario)
-    res.json({message: 'Usuário cadastrado'})
+    res.status(200).json({message: 'Usuário cadastrado'})
   })
 
 
   router.get('/usuarios', async (req, res) => {
     const usuarios = await Usuario.find()
-    res.json(usuarios)
+    res.status(200).json(usuarios)
   })
 
   router.get('/usuarios/:id', async (req, res) => {
     const id = req.params.id
     const usuario = await Usuario.findOne({_id : id})
-    res.json(usuario)
+    res.status(200).json(usuario)
   })
 
-  router.get('/usuarios/login/:email', async (req, res) => {
-    const email = req.params.email
+  router.post('/auth/usuarios', async (req, res) => {
+
+    const {email, senha} = req.body.data
+
     const usuario = await Usuario.findOne({email: email})
-    res.json(usuario)
+
+    if(!usuario){
+      console.log("Usuario nao encontrado")
+      return res.status(422).json({msg: 'Usuário não encontrado'})
+    }
+    if(usuario.senha ==  senha){
+      return res.status(200).json(usuario)
+    }
+    else{
+      console.log("Senha incorreta")
+      return res.status(422).json({msg: 'Senha incorreta'})
+    }
   })
 
 

@@ -1,7 +1,10 @@
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const server = express()
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 server.use(express.json())
 server.use(cors())
@@ -18,9 +21,6 @@ server.use("/",categoriasController);
 server.use("/",usuariosController);
 server.use("/", coresController);
 server.use("/", texturasController);
-
-
-
 
 
 
