@@ -20,7 +20,7 @@ router.post('/usuarios', async (req, res) => {
     }
   
     Usuario.create(novoUsuario)
-    res.status(200).json({message: 'Usuário cadastrado'})
+    res.status(200).json(novoUsuario)
   })
 
 
@@ -45,7 +45,7 @@ router.post('/usuarios', async (req, res) => {
       console.log("Usuario nao encontrado")
       return res.status(422).json({msg: 'Usuário não encontrado'})
     }
-    if(usuario.senha ==  senha){
+    if(usuario.senha == senha){
       return res.status(200).json(usuario)
     }
     else{
