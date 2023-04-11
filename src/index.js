@@ -10,17 +10,16 @@ server.use(express.json())
 server.use(cors())
 
 const usuariosController = require("./Usuario/usuariosController")
-const alimentosController = require("./Alimento/alimentosController")
 const categoriasController = require("./Categoria/categoriasController")
-const coresController = require("./Cor/coresController")
-const texturasController = require("./Textura/texturasController")
+const produtosController = require("./Produto/produtosController")
+const fornecedoresController = require("./Fornecedor/fornecedoresController")
 
 
-server.use("/",alimentosController);
 server.use("/",categoriasController);
 server.use("/",usuariosController);
-server.use("/", coresController);
-server.use("/", texturasController);
+server.use("/",produtosController);
+server.use("/",fornecedoresController);
+
 
 
 

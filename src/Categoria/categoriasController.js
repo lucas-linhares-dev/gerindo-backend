@@ -25,14 +25,15 @@ router.get('/categorias/:id', async (req,res) => {
 })
 
 router.post('/categorias', async (req, res) => {
-  const {nome} = req.body.data
+  const {nome, descricao} = req.body.data
 
   const novaCategoria = {
     nome: nome,
+    descricao: descricao
   }
 
   Categoria.create(novaCategoria)
-  res.status(200).json({message: 'Usuário cadastrado'})
+  res.status(200).json({message: 'Categoria cadastrada'})
 })
 
 router.put('/categorias/:id', async (req, res) => {
