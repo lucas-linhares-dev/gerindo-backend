@@ -24,17 +24,19 @@ router.get('/produtos/:id', async (req,res) => {
 })
 
 router.post('/produtos', (req, res) => {
-  const {nome, categoria, cor, textura} = req.body
+  const { nome, descricao, preco, estoque, categoria, fornecedor } = req.body
 
   const novoProduto = {
     nome: nome,
-    caregoria: categoria,
-    cor: cor,
-    textura: textura
+    descricao: descricao,
+    preco: preco,
+    estoque: estoque,
+    categoria: categoria,
+    fornecedor: fornecedor
   }
 
   Produto.create(novoProduto)
-  res.json({message: 'Produto cadastrado.'})
+  res.json({message: 'Produto cadastrado'})
 })
 
 module.exports = router
