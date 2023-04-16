@@ -31,9 +31,14 @@ router.post('/categorias', async (req, res) => {
     nome: nome,
     descricao: descricao
   }
+  
+  try {
+    await Categoria.create(novaCategoria)
 
-  Categoria.create(novaCategoria)
-  res.status(200).json({message: 'Categoria cadastrada'})
+    res.status(200).json({message: 'Categoria cadastrada'})
+  } catch (error) {
+    res.status(500).json({error: error})
+  }
 })
 
 router.put('/categorias/:id', async (req, res) => {

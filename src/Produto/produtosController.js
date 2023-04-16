@@ -23,8 +23,8 @@ router.get('/produtos/:id', async (req,res) => {
   res.json(produto)
 })
 
-router.post('/produtos', (req, res) => {
-  const { nome, descricao, preco, estoque, categoria, fornecedor } = req.body
+router.post('/produtos', async (req, res) => {
+  const { nome, descricao, preco, estoque, categoria, fornecedor } = req.body.data
 
   const novoProduto = {
     nome: nome,
@@ -35,8 +35,13 @@ router.post('/produtos', (req, res) => {
     fornecedor: fornecedor
   }
 
-  Produto.create(novoProduto)
-  res.json({message: 'Produto cadastrado'})
+  try {
+    await Produto.create(novoProduto)
+
+    res.status(200).json({message: 'Produto cadastrado'})
+  } catch (error) {
+    res.status(500).json({error: error})
+  }
 })
 
 module.exports = router

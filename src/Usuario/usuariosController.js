@@ -19,8 +19,13 @@ router.post('/usuarios', async (req, res) => {
       senha: senha
     }
   
-    Usuario.create(novoUsuario)
-    res.status(200).json(novoUsuario)
+    try {
+      await Usuario.create(novoUsuario)
+  
+      res.status(200).json({message: 'Usuário cadastrado'})
+    } catch (error) {
+      res.status(500).json({error: error})
+    }
   })
 
 
