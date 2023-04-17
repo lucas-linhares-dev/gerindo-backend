@@ -24,12 +24,14 @@ router.get('/produtos/:id', async (req,res) => {
 })
 
 router.post('/produtos', async (req, res) => {
-  const { nome, descricao, preco, estoque, categoria, fornecedor } = req.body.data
+  const { nome, descricao, preco_venda, preco_custo, codigo, estoque, categoria, fornecedor } = req.body.data
 
   const novoProduto = {
     nome: nome,
     descricao: descricao,
-    preco: preco,
+    preco_venda: preco_venda,
+    preco_custo: preco_custo,
+    codigo: codigo,
     estoque: estoque,
     categoria: categoria,
     fornecedor: fornecedor

@@ -27,4 +27,47 @@ router.post('/fornecedores', async (req, res) => {
     }
   })
 
+// router.get('/fornecedores/nome', async (req, res) => {
+//     const {nome} = req.query;
+//     const fornecedores = await Fornecedor.find()
+
+//     const fornecedoresFiltrados = fornecedores.filter((fornecedor) => fornecedor.nome.toLowerCase().includes(nome.toLowerCase()))
+
+//     console.log("________________________")
+//     console.log(fornecedoresFiltrados)
+//     console.log("________________________")
+      
+//     if(fornecedoresFiltrados.length === 0){
+//     console.log("FORNECEDOR NAO ENCONTRADO")
+//     res.json([])
+//     } else {
+//     res.status(200).json(fornecedoresFiltrados)
+//     }
+// })
+
+// router.get('/fornecedores', async (req, res) => {
+//   console.log("ENTROU AQUI")
+//   const fornecedores = await Fornecedor.find()
+//   res.json(fornecedores)
+// })
+
+router.get('/fornecedores/id', async (req, res) => {
+  const {id} = req.query;
+  console.log(id)
+
+  const fornecedor = await Fornecedor.findOne({_id: id}) 
+
+  console.log("________________________")
+  console.log(fornecedor)
+  console.log("________________________")
+
+  if(fornecedoresFiltrados.length === 0){
+    console.log("FORNECEDOR NAO ENCONTRADO")
+    res.json([])
+
+  } else {
+    res.status(200).json(fornecedor)
+  }
+})
+
 module.exports = router
