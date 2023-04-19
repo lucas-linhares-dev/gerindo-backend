@@ -45,7 +45,7 @@ router.get('/fornecedores_filter_name', async (req, res) => {
       
     if(fornecedoresFiltrados.length === 0){
     console.log("FORNECEDOR NAO ENCONTRADO")
-    res.json([])
+    res.json(objResponse)
     } else {
     res.status(200).json(objResponse)
     }
