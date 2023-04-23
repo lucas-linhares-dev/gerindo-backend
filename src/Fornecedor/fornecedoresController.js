@@ -7,7 +7,9 @@ router.use(cors())
 
 const Fornecedor = require('../../models/Fornecedor')
 
-router.post('/fornecedores', async (req, res) => {
+// CADASTRO
+
+router.post('/fornecedores', async (req, res) => { 
     const {nome, email, telefone, cnpj} = req.body.data
 
     const novoFornecedor = {
@@ -27,6 +29,34 @@ router.post('/fornecedores', async (req, res) => {
     }
   })
 
+router.post('/update_fornecedor', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
+  const {nome, email, telefone, cnpj} = req.body.data
+
+
+  const fornecedor = await Fornecedor.findOne({cnpj: cnpj}) // COMPARAR POR ID -> PROBLEMA
+
+  fornecedor.nome = nome
+  fornecedor.email = email
+  fornecedor.telefone = telefone
+  fornecedor.cnpj = cnpj
+
+  await Fornecedor.updateOne({cnpj: cnpj}, fornecedor)
+
+  return res.status(200).json(fornecedor)
+})
+
+
+router.delete('/excluir_fornecedor', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
+  const id = req.body.id
+
+  // const fornecedor = await Fornecedor.findOne({_id: id})
+  await Fornecedor.deleteOne({_id: id})
+  res.status(200).json({msg: "DEUBOM"})
+})
+
+
+  // FILTRO PELO NOME -> PARA TABELA
+
 router.get('/fornecedores_filter_name', async (req, res) => {
 
     const {nome} = req.query;
@@ -34,17 +64,12 @@ router.get('/fornecedores_filter_name', async (req, res) => {
 
     const fornecedoresFiltrados = fornecedores.filter((fornecedor) => fornecedor.nome.toLowerCase().includes(nome.toLowerCase()))
 
-    console.log("________________________")
-    console.log(fornecedoresFiltrados)
-    console.log("________________________")
-
     const objResponse = {
       fornecedores: fornecedoresFiltrados,
       length: fornecedoresFiltrados.length
     }
       
     if(fornecedoresFiltrados.length === 0){
-    console.log("FORNECEDOR NAO ENCONTRADO")
     res.json(objResponse)
     } else {
     res.status(200).json(objResponse)
