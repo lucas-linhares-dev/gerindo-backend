@@ -30,17 +30,17 @@ router.post('/fornecedores', async (req, res) => {
   })
 
 router.post('/update_fornecedor', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
-  const {nome, email, telefone, cnpj} = req.body.data
+  const {_id ,nome, email, telefone, cnpj} = req.body.data
 
 
-  const fornecedor = await Fornecedor.findOne({cnpj: cnpj}) // COMPARAR POR ID -> PROBLEMA
+  const fornecedor = await Fornecedor.findOne({_id: _id}) // COMPARAR POR ID -> PROBLEMA
 
   fornecedor.nome = nome
   fornecedor.email = email
   fornecedor.telefone = telefone
   fornecedor.cnpj = cnpj
 
-  await Fornecedor.updateOne({cnpj: cnpj}, fornecedor)
+  await Fornecedor.updateOne({_id: _id}, fornecedor)
 
   return res.status(200).json(fornecedor)
 })

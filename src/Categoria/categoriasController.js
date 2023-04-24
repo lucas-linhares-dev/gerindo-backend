@@ -10,19 +10,25 @@ const Usuario = require('../../models/Usuario')
 
 const Categoria = require('../../models/Categoria')
 
+router.get('/categorias_filter_name', async (req, res) => {
 
-router.get('/categorias', async (req, res) => {
-    const categorias = await Categoria.find()
+  const {nome} = req.query;
+  const categorias = await Categoria.find()
 
-    res.json(categorias)
-});
+  const categoriasFiltradas = categorias.filter((categoria) => categoria.nome.toLowerCase().includes(nome.toLowerCase()))
 
-router.get('/categorias/:id', async (req,res) => {
-  const id = req.params.id
-  const categoria = await Categoria.findOne({_id : id})
-
-  res.json(categoria)
+  const objResponse = {
+    categorias: categoriasFiltradas,
+    length: categoriasFiltradas.length
+  }
+    
+  if(categoriasFiltradas.length === 0){
+  res.json(objResponse)
+  } else {
+  res.status(200).json(objResponse)
+  }
 })
+
 
 router.post('/categorias', async (req, res) => {
   const {nome, descricao} = req.body.data
@@ -41,26 +47,25 @@ router.post('/categorias', async (req, res) => {
   }
 })
 
-router.put('/categorias/:id', async (req, res) => {
-    const id = req.params.id
+router.post('/update_categoria', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
+  const {_id ,nome, descricao} = req.body.data
+  const categoria = await Categoria.findOne({_id: _id})
 
-    const categoria = await Categoria.findOne({_id: id})
+  categoria.nome = nome
+  categoria.descricao = descricao
 
-    const {nome} = req.body
+  await Categoria.updateOne({_id: _id}, categoria)
 
-    categoria.nome = nome
+  return res.status(200).json(categoria)
+})
 
-    await Categoria.updateOne({_id: id}, categoria)
 
-    res.status(200).json(categoria)
-  })
+router.delete('/excluir_categoria', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
+  const id = req.body.id
 
-router.delete('/categorias/:id', async (req, res) => {
-    const id = req.params.id
-
-    const categoria = await Categoria.deleteOne({_id: id})
-
-    res.status(200).json(categoria)
+  // const fornecedor = await Fornecedor.findOne({_id: id})
+  await Categoria.deleteOne({_id: id})
+  res.status(200).json({msg: "DEUBOM"})
 })
 
 module.exports = router
