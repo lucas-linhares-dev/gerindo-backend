@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 
-const Fornecedor = mongoose.model('Fornecedor', {
+const Cliente = mongoose.model('Cliente', {
     nome: String,
     email: String,
     telefone: String,
-    cnpj: String
+    cpf: String
 })
 
 
-module.exports = Fornecedor
+module.exports = Cliente
