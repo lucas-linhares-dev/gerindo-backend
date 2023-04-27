@@ -29,6 +29,11 @@ router.get('/categorias_filter_name', async (req, res) => {
   }
 })
 
+router.get('/categorias', async (req, res) => {
+  const categorias = await Categoria.find()
+  res.json(categorias)
+})
+
 
 router.post('/categorias', async (req, res) => {
   const {nome, descricao} = req.body.data
