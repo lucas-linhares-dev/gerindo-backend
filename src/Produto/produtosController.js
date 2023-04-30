@@ -53,13 +53,13 @@ router.post('/update_produto', async (req, res) => {     // TRATAR ERROS -> TRY 
   const produto = await Produto.findOne({_id: _id}) // COMPARAR POR ID -> PROBLEMA
 
   produto.nome = nome
-  produto.descricao = descricao
-  produto.preco_venda = preco_venda
-  produto.preco_custo = preco_custo
-  produto.codigo = codigo
-  produto.estoque = estoque
-
-  console.log(categoria)
+    produto.descricao = descricao
+    produto.preco_venda = preco_venda
+    produto.preco_custo = preco_custo
+    produto.codigo = codigo
+    produto.estoque = estoque
+  
+    console.log(categoria)
 
   if(typeof categoria === 'object'){
     produto.categoria = categoria._id
