@@ -16,7 +16,8 @@ router.post('/usuarios', async (req, res) => {
     const novoUsuario = {
       nome: nome,
       email: email,
-      senha: senha
+      senha: senha,
+      caixa: '0,00'
     }
   
     try {
