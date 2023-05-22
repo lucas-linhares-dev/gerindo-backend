@@ -2,14 +2,16 @@ const mongoose = require('mongoose')
 
 const Entrada = mongoose.model('Entrada', {
     codigo: String,
-    nome: String,
-    descricao: String,
     data: Date,
     fornecedor: String,
+    valor_total: String,
+    descricao: String,
     produtos: [{
-        produto: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Produto'
+        cod_ref: {
+            // type: mongoose.Schema.Types.ObjectId,
+            // ref: 'Produto'
+            type: String,
+            required: true
         },
         quantidade: {
             type: Number,
