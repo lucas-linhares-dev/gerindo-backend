@@ -8,6 +8,7 @@ router.use(cors())
 const Usuario = require('../../models/Usuario')
 
 const Entrada = require('../../models/Entrada')
+const Produto = require('../../models/Produto')
 
 
 // router.get('/produtos', async (req, res) => {
@@ -34,9 +35,15 @@ router.post('/entradas', async (req, res) => {
         fornecedor,
         vlr_total,
         descricao,
-        produtos
+        produtos: produtos
     })
     await novaEntrada.save()
+
+    produtos.forEach(async produto => {
+      const produtoBanco = await Produto.findOne({nome: produto.nome})
+      let novoEstoque = produtoBanco.estoque + produto.quantidade
+      await Produto.updateOne({_id: produto.cod_ref}, {$set: {estoque: novoEstoque}})
+    });
     
     res.status(200).json({message: 'Entrada cadastrada'})
   } catch (error) {
@@ -45,76 +52,63 @@ router.post('/entradas', async (req, res) => {
   }
 })
 
-// router.post('/update_produto', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
-//   const { _id, nome, descricao, preco_venda, preco_custo, codigo, estoque, categoria, fornecedor } = req.body.data
+router.post('/update_entrada', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
+  const { _id, codigo, data, fornecedor, vlr_total, descricao, produtos } = req.body.data
 
 
-//   const produto = await Produto.findOne({_id: _id}) // COMPARAR POR ID -> PROBLEMA
+  const entrada = await Entrada.findOne({_id: _id}) // COMPARAR POR ID -> PROBLEMA
 
-//   produto.nome = nome
-//     produto.descricao = descricao
-//     produto.preco_venda = preco_venda
-//     produto.preco_custo = preco_custo
-//     produto.codigo = codigo
-//     produto.estoque = estoque
+  entrada.codigo = codigo
+  entrada.data = data
+  entrada.fornecedor = fornecedor
+  entrada.vlr_total = vlr_total
+  entrada.descricao = descricao
+  entrada.produtos = produtos
   
-//     console.log(categoria)
+  console.log(entrada)
 
-//   if(typeof categoria === 'object'){
-//     produto.categoria = categoria._id
-//   } 
-//   else{
-//     produto.categoria = categoria
-//   } 
+  await Entrada.updateOne({_id: _id}, entrada)
 
-//   if(typeof fornecedor === 'object'){
-//     produto.fornecedor = fornecedor._id
-//   } 
-//   else{
-//     produto.fornecedor = fornecedor
-//   } 
+  return res.status(200).json(entrada)
+})
 
 
-//   await Produto.updateOne({_id: _id}, produto)
+router.delete('/excluir_produto', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
+  const id = req.body.id
 
-//   return res.status(200).json(produto)
-// })
-
-
-// router.delete('/excluir_produto', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
-//   const id = req.body.id
-
-//   // const fornecedor = await Fornecedor.findOne({_id: id})
-//   await Produto.deleteOne({_id: id})
-//   res.status(200).json({msg: "DEUBOM"})
-// })
+  // const fornecedor = await Fornecedor.findOne({_id: id})
+  await Produto.deleteOne({_id: id})
+  res.status(200).json({msg: "DEUBOM"})
+})
 
 
 //   // FILTRO PELO NOME -> PARA TABELA
 
-// router.get('/produtos_filter_name', async (req, res) => {
+router.get('/entradas_filter_codigo', async (req, res) => {
 
-//     const {nome} = req.query;
-//     const produtos = await Produto.find()
+    const {codigo} = req.query;
+    console.log(codigo)
+    const entradas = await Entrada.find()
 
-//     const produtosFiltrados = produtos.filter((produto) => produto.nome.toLowerCase().includes(nome.toLowerCase()))
 
-//     const objResponse = {
-//       produtos: produtosFiltrados,
-//       length: produtosFiltrados.length
-//     }
+    const entradasFiltradas = entradas.filter((entrada) => entrada.codigo !== '' && entrada.codigo.toLowerCase().includes(codigo.toLowerCase()))
+
+    const objResponse = {
+      entradas: entradasFiltradas,
+      length: entradasFiltradas.length
+    }
       
-//     if(produtosFiltrados.length === 0){
-//     res.json(objResponse)
-//     } else {
-//     res.status(200).json(objResponse)
-//     }
-// })
+    if(entradasFiltradas.length === 0){
+    res.json(objResponse)
+    } else {
+    res.status(200).json(objResponse)
+    }
+})
 
-// router.get('/produtos', async (req, res) => {
-//   const fornecedores = await Fornecedor.find()
-//   res.json(fornecedores)
-// })
+router.get('/produtos', async (req, res) => {
+  const fornecedores = await Fornecedor.find()
+  res.json(fornecedores)
+})
 
 
 module.exports = router

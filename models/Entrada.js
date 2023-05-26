@@ -14,6 +14,9 @@ const Entrada = mongoose.model('Entrada', {
         },
         quantidade: {
             type: Number,
+        },
+        nome: {
+            type: String
         }
     }],
 })
