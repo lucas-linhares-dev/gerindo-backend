@@ -5,7 +5,6 @@ const router = express.Router();
 router.use(express.json())
 router.use(cors())
 
-const Usuario = require('../../models/Usuario')
 
 const Entrada = require('../../models/Entrada')
 const Produto = require('../../models/Produto')
@@ -73,14 +72,6 @@ router.post('/update_entrada', async (req, res) => {     // TRATAR ERROS -> TRY 
 })
 
 
-router.delete('/excluir_produto', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
-  const id = req.body.id
-
-  // const fornecedor = await Fornecedor.findOne({_id: id})
-  await Produto.deleteOne({_id: id})
-  res.status(200).json({msg: "DEUBOM"})
-})
-
 
 //   // FILTRO PELO NOME -> PARA TABELA
 
@@ -103,11 +94,6 @@ router.get('/entradas_filter_codigo', async (req, res) => {
     } else {
     res.status(200).json(objResponse)
     }
-})
-
-router.get('/produtos', async (req, res) => {
-  const fornecedores = await Fornecedor.find()
-  res.json(fornecedores)
 })
 
 

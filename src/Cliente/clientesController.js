@@ -9,6 +9,11 @@ const Cliente = require('../../models/Cliente')
 
 // CADASTRO
 
+router.get('/clientes', async (req, res) => {
+  const clientes = await Cliente.find()
+  res.json(clientes)
+})
+
 router.post('/insert_cliente', async (req, res) => { 
     const {nome, email, telefone, cpf} = req.body.data
 

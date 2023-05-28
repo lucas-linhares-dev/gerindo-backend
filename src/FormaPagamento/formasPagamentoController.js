@@ -67,4 +67,10 @@ router.delete('/excluir_formaPagamento', async (req, res) => {     // TRATAR ERR
   res.status(200).json({msg: "DEUBOM"})
 })
 
+router.get('/formaspag', async (req, res) => {
+  const formas_pag = await FormaPagamento.find()
+  res.json(formas_pag)
+})
+
+
 module.exports = router

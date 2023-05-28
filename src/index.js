@@ -16,6 +16,8 @@ const fornecedoresController = require("./Fornecedor/fornecedoresController")
 const clientesController = require("./Cliente/clientesController")
 const formasPagamentoController = require("./FormaPagamento/formasPagamentoController")
 const entradasController = require("./Entrada/entradasController")
+const vendasController = require("./Venda/vendasController")
+
 
 
 
@@ -27,6 +29,8 @@ server.use("/",produtosController);
 server.use("/",fornecedoresController);
 server.use("/",formasPagamentoController);
 server.use("/",entradasController);
+server.use("/",vendasController);
+
 
 
 

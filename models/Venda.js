@@ -1,21 +1,25 @@
 const mongoose = require('mongoose')
 
 const Venda = mongoose.model('Venda', {
-    nome: String,
+    codigo: String,
     descricao: String,
     data: Date,
     cliente: String,
+    forma_pag: String,
     produtos: [{
-        produto: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Produto'
+        cod_ref: {
+            // type: mongoose.Schema.Types.ObjectId,
+            // ref: 'Produto'
+            type: String,
         },
         quantidade: {
             type: Number,
-            required: true
+        },
+        nome: {
+            type: String
         }
     }],
-    desconto: String
+    vlr_total: String
 })
 
 
