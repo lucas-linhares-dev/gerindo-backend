@@ -82,7 +82,6 @@ router.post('/update_venda', async (req, res) => {     // TRATAR ERROS -> TRY CA
 router.get('/vendas_filter_codigo', async (req, res) => {
 
     const {codigo} = req.query;
-    console.log(codigo)
     const vendas = await Venda.find()
 
 

@@ -10,14 +10,14 @@ router.use(cors())
 const Usuario = require('../../models/Usuario')
 
 router.post('/usuarios', async (req, res) => {
-    const {nome, email, senha} = req.body.data
+    const {nome, email, cargo, senha} = req.body.data
     // salt = bcrypt.genSalt(12)
     // senhaHash = await bcrypt.hash(senha, salt)
     const novoUsuario = {
       nome: nome,
       email: email,
       senha: senha,
-      caixa: '0,00'
+      cargo: cargo
     }
   
     try {
