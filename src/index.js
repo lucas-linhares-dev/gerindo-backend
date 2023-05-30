@@ -5,6 +5,10 @@ const server = express()
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const bodyParser = require('body-parser');
+
+server.use(bodyParser.json({ limit: '10mb' }));
+server.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 server.use(express.json())
 server.use(cors())
@@ -17,7 +21,6 @@ const clientesController = require("./Cliente/clientesController")
 const formasPagamentoController = require("./FormaPagamento/formasPagamentoController")
 const entradasController = require("./Entrada/entradasController")
 const vendasController = require("./Venda/vendasController")
-
 
 
 

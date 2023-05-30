@@ -5,7 +5,7 @@ const Usuario = mongoose.model('Usuario', {
     email: String,
     senha: Number,
     cargo: String,
+    foto: String,
 })
-
 
 module.exports = Usuario

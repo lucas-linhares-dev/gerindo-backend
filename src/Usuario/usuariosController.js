@@ -60,5 +60,23 @@ router.post('/usuarios', async (req, res) => {
     }
   })
 
+  router.post('/update_usuario', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
+    const { _id, nome, email, senha, cargo, foto } = req.body.data
+  
+  
+    const usuario = await Usuario.findOne({_id: _id}) // COMPARAR POR ID -> PROBLEMA
+  
+    usuario._id = _id
+    usuario.nome = nome
+    usuario.email = email
+    usuario.senha = senha
+    usuario.cargo = cargo
+    usuario.foto = foto
+      
+    await Usuario.updateOne({_id: _id}, usuario)
+  
+    return res.status(200).json(usuario)
+  })
+
 
 module.exports = router

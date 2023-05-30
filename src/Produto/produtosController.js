@@ -24,7 +24,7 @@ const Produto = require('../../models/Produto')
 // })
 
 router.post('/produtos', async (req, res) => {
-  const { nome, descricao, preco_venda, preco_custo, codigo, estoque, categoria, fornecedor } = req.body.data
+  const { nome, descricao, preco_venda, preco_custo, codigo, estoque, categoria, fornecedor, foto } = req.body.data
 
   const novoProduto = {
     nome: nome,
@@ -34,7 +34,8 @@ router.post('/produtos', async (req, res) => {
     codigo: codigo,
     estoque: estoque,
     categoria: categoria._id,
-    fornecedor: fornecedor._id
+    fornecedor: fornecedor._id,
+    foto: foto
   }
 
   try {
@@ -47,20 +48,21 @@ router.post('/produtos', async (req, res) => {
 })
 
 router.post('/update_produto', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
-  const { _id, nome, descricao, preco_venda, preco_custo, codigo, estoque, categoria, fornecedor } = req.body.data
+  const { _id, nome, descricao, preco_venda, preco_custo, codigo, estoque, categoria, fornecedor, foto } = req.body.data
+
+  console.log(req.body.data)
 
 
   const produto = await Produto.findOne({_id: _id}) // COMPARAR POR ID -> PROBLEMA
 
   produto.nome = nome
-    produto.descricao = descricao
-    produto.preco_venda = preco_venda
-    produto.preco_custo = preco_custo
-    produto.codigo = codigo
-    produto.estoque = estoque
+  produto.descricao = descricao
+  produto.preco_venda = preco_venda
+  produto.preco_custo = preco_custo
+  produto.codigo = codigo
+  produto.estoque = estoque
+  produto.foto = foto
   
-    console.log(categoria)
-
   if(typeof categoria === 'object'){
     produto.categoria = categoria._id
   } 
@@ -74,7 +76,6 @@ router.post('/update_produto', async (req, res) => {     // TRATAR ERROS -> TRY 
   else{
     produto.fornecedor = fornecedor
   } 
-
 
   await Produto.updateOne({_id: _id}, produto)
 
