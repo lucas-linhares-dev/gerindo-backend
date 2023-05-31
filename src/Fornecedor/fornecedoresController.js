@@ -10,13 +10,19 @@ const Fornecedor = require('../../models/Fornecedor')
 // CADASTRO
 
 router.post('/fornecedores', async (req, res) => { 
-    const {nome, email, telefone, cnpj} = req.body.data
+    const {nome, email, telefone, cnpj, cep, endereco, bairro, numero, complemento, municipio} = req.body.data
 
     const novoFornecedor = {
       nome: nome,
       email: email,
       telefone: telefone,
-      cnpj: cnpj
+      cnpj: cnpj,
+      cep: cep,
+      endereco: endereco,
+      bairro: bairro,
+      numero: numero,
+      complemento: complemento,
+      municipio: municipio,
     }
     
     try{
@@ -30,7 +36,7 @@ router.post('/fornecedores', async (req, res) => {
   })
 
 router.post('/update_fornecedor', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
-  const {_id ,nome, email, telefone, cnpj} = req.body.data
+  const {_id ,nome, email, telefone, cnpj, cep, endereco, bairro, numero, complemento, municipio} = req.body.data
 
 
   const fornecedor = await Fornecedor.findOne({_id: _id}) // COMPARAR POR ID -> PROBLEMA
@@ -39,6 +45,12 @@ router.post('/update_fornecedor', async (req, res) => {     // TRATAR ERROS -> T
   fornecedor.email = email
   fornecedor.telefone = telefone
   fornecedor.cnpj = cnpj
+  fornecedor.cep = cep
+  fornecedor.endereco = endereco
+  fornecedor.bairro = bairro
+  fornecedor.numero = numero
+  fornecedor.complemento = complemento
+  fornecedor.municipio = municipio
 
   await Fornecedor.updateOne({_id: _id}, fornecedor)
 

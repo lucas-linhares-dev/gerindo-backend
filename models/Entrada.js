@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Entrada = mongoose.model('Entrada', {
     codigo: String,
-    data: Date,
+    data: String,
     fornecedor: String,
     vlr_total: String,
     descricao: String,

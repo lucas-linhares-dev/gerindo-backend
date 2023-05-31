@@ -15,13 +15,19 @@ router.get('/clientes', async (req, res) => {
 })
 
 router.post('/insert_cliente', async (req, res) => { 
-    const {nome, email, telefone, cpf} = req.body.data
+    const {nome, email, telefone, cpf, cep, endereco, bairro, numero, complemento, municipio} = req.body.data
 
     const novoCliente = {
       nome: nome,
       email: email,
       telefone: telefone,
-      cpf: cpf
+      cpf: cpf,
+      cep: cep,
+      endereco: endereco,
+      bairro: bairro,
+      numero: numero,
+      complemento: complemento,
+      municipio: municipio,
     }
     
     try{
@@ -35,7 +41,7 @@ router.post('/insert_cliente', async (req, res) => {
   })
 
 router.post('/update_cliente', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
-  const {_id ,nome, email, telefone, cpf} = req.body.data
+  const {_id ,nome, email, telefone, cpf, cep, endereco, bairro, numero, complemento, municipio} = req.body.data
 
 
   const cliente = await Cliente.findOne({_id: _id}) // COMPARAR POR ID -> PROBLEMA
@@ -44,6 +50,13 @@ router.post('/update_cliente', async (req, res) => {     // TRATAR ERROS -> TRY 
   cliente.email = email
   cliente.telefone = telefone
   cliente.cpf = cpf
+  cliente.cep = cep
+  cliente.endereco = endereco
+  cliente.bairro = bairro
+  cliente.numero = numero
+  cliente.complemento = complemento
+  cliente.municipio = municipio
+  
 
   await Cliente.updateOne({_id: _id}, cliente)
 

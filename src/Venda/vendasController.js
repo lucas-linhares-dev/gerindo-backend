@@ -99,4 +99,31 @@ router.get('/vendas_filter_codigo', async (req, res) => {
     }
 })
 
+
+router.get('/vendas_filter', async (req, res) => {
+  const {objFilters} = req.query;
+  const vendas = await Venda.find()
+
+  let vendasFiltradas = vendas
+
+  if(objFilters?.cliente){
+    vendasFiltradas = vendasFiltradas.filter((venda) => venda.codigo !== '' && venda?.cliente === objFilters.cliente)
+  }
+  if(objFilters?.forma_pag){
+    vendasFiltradas = vendasFiltradas.filter((venda) => venda.codigo !== '' && venda?.forma_pag === objFilters.forma_pag)
+  }
+
+  const objResponse = {
+    vendas: vendasFiltradas,
+    length: vendasFiltradas.length
+  }
+    
+  if(vendasFiltradas.length === 0){
+  res.json(objResponse)
+  } else {
+  res.status(200).json(objResponse)
+  }
+})
+
+
 module.exports = router

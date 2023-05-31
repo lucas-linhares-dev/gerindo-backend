@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const Venda = mongoose.model('Venda', {
     codigo: String,
     descricao: String,
-    data: Date,
+    data: String,
     cliente: String,
     forma_pag: String,
     produtos: [{
