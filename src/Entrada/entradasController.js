@@ -96,6 +96,59 @@ router.get('/entradas_filter_codigo', async (req, res) => {
     }
 })
 
+router.get('/entradas_filter', async (req, res) => {
+  const { objFilters } = req.query;
+
+  let entradasFiltradas = await Entrada.find()
+
+  if(!objFilters){
+    const objResponse = {
+      entradas: entradasFiltradas,
+      length: entradasFiltradas.length
+    }
+    return res.status(200).json(objResponse)
+  }
+
+  if (objFilters?.dt_inicial || objFilters?.dt_final) {
+    console.log(objFilters)
+    if (objFilters.dt_inicial && objFilters.dt_final) {
+      entradasFiltradas = entradasFiltradas.filter((venda) => {
+        const vendaData = new Date(venda.data);
+        return (
+          vendaData >= new Date(objFilters.dt_inicial) &&
+          vendaData <= new Date(objFilters.dt_final)
+        );
+      });
+    } else if (objFilters.dt_inicial) {
+      entradasFiltradas = entradasFiltradas.filter((venda) => {
+        const vendaData = new Date(venda.data);
+        return vendaData >= new Date(objFilters.dt_inicial);
+      });
+    } else if (objFilters.dt_final) {
+      entradasFiltradas = entradasFiltradas.filter((venda) => {
+        const vendaData = new Date(venda.data);
+        return vendaData <= new Date(objFilters.dt_final);
+      });
+    }
+  }
+
+  if (objFilters?.fornecedor) {
+    entradasFiltradas = entradasFiltradas.filter((entrada) => entrada?.codigo !== '' && entrada?.fornecedor === objFilters.fornecedor)
+  }
+
+
+  const objResponse = {
+    entradas: entradasFiltradas,
+    length: entradasFiltradas.length
+  }
+
+  if (entradasFiltradas.length === 0) {
+    res.json(objResponse)
+  } else {
+    res.status(200).json(objResponse)
+  }
+})
+
 
 module.exports = router
 
