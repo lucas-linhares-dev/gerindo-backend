@@ -10,19 +10,6 @@ const Usuario = require('../../models/Usuario')
 const Produto = require('../../models/Produto')
 
 
-// router.get('/produtos', async (req, res) => {
-//     const produtos = await Produto.find()
-
-//     res.json(produtos)
-// });
-
-// router.get('/produtos/:id', async (req,res) => {
-//   const id = req.params.id
-//   const produto = await Produto.findOne({_id : id})
-
-//   res.json(produto)
-// })
-
 router.post('/produtos', async (req, res) => {
   const { nome, descricao, preco_venda, preco_custo, codigo, estoque, categoria, fornecedor, foto } = req.body.data
 
@@ -47,13 +34,13 @@ router.post('/produtos', async (req, res) => {
   }
 })
 
-router.post('/update_produto', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
+router.post('/update_produto', async (req, res) => {     // 
   const { _id, nome, descricao, preco_venda, preco_custo, codigo, estoque, categoria, fornecedor, foto } = req.body.data
 
   console.log(req.body.data)
 
 
-  const produto = await Produto.findOne({_id: _id}) // COMPARAR POR ID -> PROBLEMA
+  const produto = await Produto.findOne({_id: _id}) // COMPARAR 
 
   produto.nome = nome
   produto.descricao = descricao

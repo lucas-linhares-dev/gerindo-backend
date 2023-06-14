@@ -5,23 +5,9 @@ const router = express.Router();
 router.use(express.json())
 router.use(cors())
 
-
 const Produto = require('../../models/Produto');
 const Venda = require('../../models/Venda');
 
-
-// router.get('/produtos', async (req, res) => {
-//     const produtos = await Produto.find()
-
-//     res.json(produtos)
-// });
-
-// router.get('/produtos/:id', async (req,res) => {
-//   const id = req.params.id
-//   const produto = await Produto.findOne({_id : id})
-
-//   res.json(produto)
-// })
 
 router.post('/vendas', async (req, res) => {
   const { codigo, data, cliente, forma_pag, vlr_total, descricao, produtos } = req.body.data
@@ -54,12 +40,11 @@ router.post('/vendas', async (req, res) => {
   }
 })
 
-router.post('/update_venda', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
+router.post('/update_venda', async (req, res) => {   
   const { _id, codigo, data, cliente, forma_pag, vlr_total, descricao, produtos } = req.body.data
 
 
-  const venda = await Venda.findOne({ _id: _id }) // COMPARAR POR ID -> PROBLEMA
-
+  const venda = await Venda.findOne({ _id: _id })
   venda.codigo = codigo
   venda.data = data
   venda.cliente = cliente
@@ -75,8 +60,6 @@ router.post('/update_venda', async (req, res) => {     // TRATAR ERROS -> TRY CA
   return res.status(200).json(venda)
 })
 
-
-//   // FILTRO PELO NOME -> PARA TABELA
 
 router.get('/vendas_filter_codigo', async (req, res) => {
 

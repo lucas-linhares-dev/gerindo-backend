@@ -10,7 +10,6 @@ const Endereco = require('../../models/Endereco')
 
 
 router.post('/enderecos', async (req, res) => {
-  console.log("AAAAAAAAAAAAAAAAAAAAAAAAA")
   const { logradouro, bairro, localidade, UF  } = req.body
 
   try {

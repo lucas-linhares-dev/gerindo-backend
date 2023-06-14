@@ -35,11 +35,11 @@ router.post('/fornecedores', async (req, res) => {
     }
   })
 
-router.post('/update_fornecedor', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
+router.post('/update_fornecedor', async (req, res) => {     // 
   const {_id ,nome, email, telefone, cnpj, cep, endereco, bairro, numero, complemento, municipio} = req.body.data
 
 
-  const fornecedor = await Fornecedor.findOne({_id: _id}) // COMPARAR POR ID -> PROBLEMA
+  const fornecedor = await Fornecedor.findOne({_id: _id}) // 
 
   fornecedor.nome = nome
   fornecedor.email = email
@@ -58,16 +58,14 @@ router.post('/update_fornecedor', async (req, res) => {     // TRATAR ERROS -> T
 })
 
 
-router.delete('/excluir_fornecedor', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
+router.delete('/excluir_fornecedor', async (req, res) => {     
   const id = req.body.id
 
-  // const fornecedor = await Fornecedor.findOne({_id: id})
   await Fornecedor.deleteOne({_id: id})
   res.status(200).json({msg: "DEUBOM"})
 })
 
 
-  // FILTRO PELO NOME -> PARA TABELA
 
 router.get('/fornecedores_filter_name', async (req, res) => {
 

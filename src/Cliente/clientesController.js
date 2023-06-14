@@ -40,11 +40,11 @@ router.post('/insert_cliente', async (req, res) => {
     }
   })
 
-router.post('/update_cliente', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
+router.post('/update_cliente', async (req, res) => {    
   const {_id ,nome, email, telefone, cpf, cep, endereco, bairro, numero, complemento, municipio} = req.body.data
 
 
-  const cliente = await Cliente.findOne({_id: _id}) // COMPARAR POR ID -> PROBLEMA
+  const cliente = await Cliente.findOne({_id: _id}) 
 
   cliente.nome = nome
   cliente.email = email
@@ -64,16 +64,14 @@ router.post('/update_cliente', async (req, res) => {     // TRATAR ERROS -> TRY 
 })
 
 
-router.delete('/excluir_cliente', async (req, res) => {     // TRATAR ERROS -> TRY CATCH P/ CADA CHAMADA
+router.delete('/excluir_cliente', async (req, res) => {     
   const id = req.body.id
 
-  // const fornecedor = await Fornecedor.findOne({_id: id})
+
   await Cliente.deleteOne({_id: id})
   res.status(200).json({msg: "DEUBOM"})
 })
 
-
-  // FILTRO PELO NOME -> PARA TABELA
 
 router.get('/clientes_filter_name', async (req, res) => {
 

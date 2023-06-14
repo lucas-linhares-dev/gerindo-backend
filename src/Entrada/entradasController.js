@@ -5,23 +5,9 @@ const router = express.Router();
 router.use(express.json())
 router.use(cors())
 
-
 const Entrada = require('../../models/Entrada')
 const Produto = require('../../models/Produto')
 
-
-// router.get('/produtos', async (req, res) => {
-//     const produtos = await Produto.find()
-
-//     res.json(produtos)
-// });
-
-// router.get('/produtos/:id', async (req,res) => {
-//   const id = req.params.id
-//   const produto = await Produto.findOne({_id : id})
-
-//   res.json(produto)
-// })
 
 router.post('/entradas', async (req, res) => {
   const { codigo, data, fornecedor, vlr_total, descricao, produtos  } = req.body.data
