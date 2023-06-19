@@ -5,9 +5,6 @@ const router = express.Router()
 router.use(express.json())
 router.use(cors())
 
-
-const Usuario = require('../../models/Usuario')
-
 const Categoria = require('../../models/Categoria')
 
 router.get('/categorias_filter_name', async (req, res) => {
