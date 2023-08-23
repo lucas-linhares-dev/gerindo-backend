@@ -41,17 +41,45 @@ router.post('/usuarios', async (req, res) => {
     res.status(200).json(usuario)
   })
 
-  router.post('/auth/usuarios', async (req, res) => {
+  router.post('/auth/usuarios/mobile', async (req, res) => {
 
-    const {email, senha} = req.body.data
+    console.log("AAAAAAAAAAAAAAAAAAAAAAA")
 
-    const usuario = await Usuario.findOne({email: email})
+    const {email, senha} = req.body
+
+    let usuario = await Usuario.findOne({email: email})
 
     if(!usuario){
       console.log("Usuario nao encontrado")
       return res.status(422).json({msg: 'Usuário não encontrado'})
     }
     if(usuario.senha == senha){
+      usuario = {
+        nome: usuario.nome,
+        email: usuario.email,
+        cargo: usuario.cargo
+      }
+      console.log(usuario)
+      return res.status(200).json(usuario)
+    }
+    else{
+      console.log("Senha incorreta")
+      return res.status(422).json({msg: 'Senha incorreta'})
+    }
+  })
+
+  router.post('/auth/usuarios', async (req, res) => {
+
+    const {email, senha} = req.body
+
+    let usuario = await Usuario.findOne({email: email})
+
+    if(!usuario){
+      console.log("Usuario nao encontrado")
+      return res.status(422).json({msg: 'Usuário não encontrado'})
+    }
+    if(usuario.senha == senha){
+      console.log(usuario)
       return res.status(200).json(usuario)
     }
     else{
