@@ -29,6 +29,25 @@ router.post('/usuarios', async (req, res) => {
     }
   })
 
+  router.post('/cadastro/mobile', async (req, res) => {
+    const {nome, email, senha} = req.body
+    // salt = bcrypt.genSalt(12)
+    // senhaHash = await bcrypt.hash(senha, salt)
+    const novoUsuario = {
+      nome: nome,
+      email: email,
+      senha: senha,
+    }
+  
+    try {
+      await Usuario.create(novoUsuario)
+  
+      res.status(200).json(novoUsuario)
+    } catch (error) {
+      res.status(500).json({error: error})
+    }
+  })
+
 
   router.get('/usuarios', async (req, res) => {
     const usuarios = await Usuario.find()
