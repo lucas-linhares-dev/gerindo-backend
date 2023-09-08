@@ -100,6 +100,17 @@ router.get('/produtos_filter_name', async (req, res) => {
     }
 })
 
+router.get('/produto/getWithCode/:codigo', async (req, res) => {
+
+  const {codigo} = req.params;
+
+  const produtos = await Produto.find()
+  const produto = produtos.filter((produto) => produto.codigo.toLowerCase().includes(codigo.toLowerCase()))[0]
+
+  res.status(200).json(produto)
+  
+})
+
 router.get('/produtos', async (req, res) => {
   const fornecedores = await Fornecedor.find()
   res.json(fornecedores)
