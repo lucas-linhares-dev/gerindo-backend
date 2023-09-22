@@ -68,6 +68,7 @@ router.delete('/excluir_formaPagamento', async (req, res) => {     // TRATAR ERR
 })
 
 router.get('/formaspag', async (req, res) => {
+  console.log("AAAAAAAAAAAA")
   const formas_pag = await FormaPagamento.find()
   res.json(formas_pag)
 })

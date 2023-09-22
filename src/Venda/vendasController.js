@@ -10,17 +10,23 @@ const Venda = require('../../models/Venda');
 
 
 router.post('/vendas', async (req, res) => {
-  const { codigo, data, cliente, forma_pag, vlr_total, descricao, produtos } = req.body.data
-  console.log(req.body.data)
+  console.log(req.body.body)
+  const { data, cliente, forma_pag, vlr_total, produtos } = req.body.body
 
+  console.log("INSERT VENDAAAA")
+  console.log(data)
+  console.log(cliente)
+  console.log(forma_pag)
+  console.log(vlr_total)
+  console.log(produtos)
   try {
     const novaVenda = new Venda({
-      codigo,
+      // codigo,
       data,
       cliente: cliente._id,
       forma_pag: forma_pag._id,
       vlr_total,
-      descricao,
+      // descricao,
       produtos: produtos
     })
 
