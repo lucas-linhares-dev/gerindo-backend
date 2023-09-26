@@ -76,7 +76,8 @@ router.post('/usuarios', async (req, res) => {
       usuario = {
         nome: usuario.nome,
         email: usuario.email,
-        cargo: usuario.cargo
+        cargo: usuario.cargo,
+        foto: usuario.foto,
       }
       console.log(usuario)
       return res.status(200).json(usuario)
