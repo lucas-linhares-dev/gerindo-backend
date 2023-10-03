@@ -87,6 +87,15 @@ router.get('/vendas_filter_codigo', async (req, res) => {
   }
 })
 
+router.get('/vendas/getAll', async (req, res) => {
+  console.log('GET VENDAS')
+  const vendas = await Venda.find()
+
+  // const vendasFiltradas = vendas.filter((venda) => venda.codigo !== '' && venda.codigo.toLowerCase().includes(codigo.toLowerCase()))
+
+    res.status(200).json(vendas)
+})
+
 
 router.get('/vendas_filter', async (req, res) => {
   const { objFilters } = req.query;
