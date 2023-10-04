@@ -7,6 +7,9 @@ router.use(cors())
 
 const Produto = require('../../models/Produto');
 const Venda = require('../../models/Venda');
+const FormaPag = require('../../models/FormaPagamento');
+const Cliente = require('../../models/Cliente');
+
 
 
 router.post('/vendas', async (req, res) => {
@@ -19,12 +22,13 @@ router.post('/vendas', async (req, res) => {
   console.log(forma_pag)
   console.log(vlr_total)
   console.log(produtos)
+
   try {
     const novaVenda = new Venda({
       // codigo,
       data,
-      cliente: cliente._id,
-      forma_pag: forma_pag._id,
+      cliente: cliente,
+      forma_pag: forma_pag,
       vlr_total,
       // descricao,
       produtos: produtos
@@ -88,12 +92,27 @@ router.get('/vendas_filter_codigo', async (req, res) => {
 })
 
 router.get('/vendas/getAll', async (req, res) => {
-  console.log('GET VENDAS')
-  const vendas = await Venda.find()
+  console.log("GET VENDAS")
+  try {
+    const vendas = await Venda.find()
+    const formasPag = await FormaPag.find()
+    const clientes = await Cliente.find()
 
-  // const vendasFiltradas = vendas.filter((venda) => venda.codigo !== '' && venda.codigo.toLowerCase().includes(codigo.toLowerCase()))
+    vendas.forEach((venda) => {
+      const formaPag = formasPag.filter((formaPag) => formaPag._id == venda.forma_pag)
+      const cliente = clientes.filter((cliente) => cliente._id == venda.cliente)
+      venda.forma_pag = formaPag[0].nome
+      venda.cliente = cliente[0].nome
+    });
 
-    res.status(200).json(vendas)
+    res.status(200).json(vendas);
+  } catch (error) {
+    console.log("ERRO BUSCAR VENDAS")
+    res.status(500).json({ error: 'Erro ao buscar vendas' });
+  }
+
+    // const vendasFiltradas = vendas.filter((venda) => venda.codigo !== '' && venda.codigo.toLowerCase().includes(codigo.toLowerCase()))
+
 })
 
 
