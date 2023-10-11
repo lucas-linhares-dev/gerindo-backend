@@ -17,6 +17,12 @@ const Venda = mongoose.model('Venda', {
         },
         nome: {
             type: String
+        },
+        foto: {
+            type: String
+        },
+        preco_venda: {
+            type: String
         }
     }],
     vlr_total: String

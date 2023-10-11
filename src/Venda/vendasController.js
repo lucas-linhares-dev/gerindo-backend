@@ -91,21 +91,30 @@ router.get('/vendas_filter_codigo', async (req, res) => {
   }
 })
 
+
 router.get('/vendas/getAll', async (req, res) => {
   console.log("GET VENDAS")
   try {
     const vendas = await Venda.find()
     const formasPag = await FormaPag.find()
     const clientes = await Cliente.find()
+    const vendasEnviar = []
 
     vendas.forEach((venda) => {
       const formaPag = formasPag.filter((formaPag) => formaPag._id == venda.forma_pag)
       const cliente = clientes.filter((cliente) => cliente._id == venda.cliente)
-      venda.forma_pag = formaPag[0].nome
-      venda.cliente = cliente[0].nome
+      const newVenda = {
+        _id: venda._id,
+        data: venda.data,
+        produtos: venda.produtos,
+        vlr_total: venda.vlr_total,
+        cliente: {_id: cliente[0]._id, nome: cliente[0].nome},
+        forma_pag: {_id: formaPag[0]._id, nome: formaPag[0].nome}
+      }
+      vendasEnviar.push(newVenda)
     });
-
-    res.status(200).json(vendas);
+    console.log(vendasEnviar)
+    res.status(200).json(vendasEnviar);
   } catch (error) {
     console.log("ERRO BUSCAR VENDAS")
     res.status(500).json({ error: 'Erro ao buscar vendas' });
