@@ -14,8 +14,12 @@ router.get('/clientes', async (req, res) => {
   res.json(clientes)
 })
 
-router.post('/insert_cliente', async (req, res) => { 
-    const {nome, email, telefone, cpf, cep, endereco, bairro, numero, complemento, municipio} = req.body.data
+router.post('/cliente/insert', async (req, res) => { 
+    console.log("INSERT CLIENTE")
+    console.log(req.body)
+    const {nome, email, telefone, cpf, cep, endereco, bairro, numero, complemento, municipio} = req.body
+
+    console.log(nome)
 
     const novoCliente = {
       nome: nome,
@@ -30,14 +34,8 @@ router.post('/insert_cliente', async (req, res) => {
       municipio: municipio,
     }
     
-    try{
-      await Cliente.create(novoCliente)
-
-      res.status(200).json(novoCliente)
-    }
-    catch (error) {
-      res.status(500).json({error: error})
-    }
+    await Cliente.create(novoCliente)
+    res.status(200).json(novoCliente)
   })
 
 router.post('/update_cliente', async (req, res) => {    
