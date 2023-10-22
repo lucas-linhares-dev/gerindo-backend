@@ -8,9 +8,10 @@ const Cliente = mongoose.model('Cliente', {
     cep: String,
     endereco: String,
     bairro: String,
-    numero: Number,
+    numero: String,
     complemento: String,
     municipio: String,
+    estado: String,
 })
 
 

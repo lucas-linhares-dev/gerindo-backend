@@ -17,9 +17,9 @@ router.get('/clientes', async (req, res) => {
 router.post('/cliente/insert', async (req, res) => { 
     console.log("INSERT CLIENTE")
     console.log(req.body)
-    const {nome, email, telefone, cpf, cep, endereco, bairro, numero, complemento, municipio} = req.body
+    const {nome, email, telefone, cpf, cep, endereco, bairro, numero, complemento, municipio, estado} = req.body
 
-    console.log(nome)
+    console.log(numero)
 
     const novoCliente = {
       nome: nome,
@@ -32,14 +32,17 @@ router.post('/cliente/insert', async (req, res) => {
       numero: numero,
       complemento: complemento,
       municipio: municipio,
+      estado: estado
     }
     
     await Cliente.create(novoCliente)
     res.status(200).json(novoCliente)
   })
 
-router.post('/update_cliente', async (req, res) => {    
-  const {_id ,nome, email, telefone, cpf, cep, endereco, bairro, numero, complemento, municipio} = req.body.data
+router.post('/cliente/update', async (req, res) => {  
+  console.log("UPDATE CLIENTE")
+  
+  const {_id ,nome, email, telefone, cpf, cep, endereco, bairro, numero, complemento, municipio, estado} = req.body
 
 
   const cliente = await Cliente.findOne({_id: _id}) 
@@ -54,6 +57,7 @@ router.post('/update_cliente', async (req, res) => {
   cliente.numero = numero
   cliente.complemento = complemento
   cliente.municipio = municipio
+  cliente.estado = estado
   
 
   await Cliente.updateOne({_id: _id}, cliente)
@@ -63,7 +67,7 @@ router.post('/update_cliente', async (req, res) => {
 
 
 router.delete('/excluir_cliente', async (req, res) => {     
-  const id = req.body.id
+  const id = req.body.id 
 
 
   await Cliente.deleteOne({_id: id})
