@@ -20,8 +20,8 @@ router.post('/produtos', async (req, res) => {
     preco_custo: preco_custo,
     codigo: codigo,
     estoque: estoque,
-    categoria: categoria._id,
-    fornecedor: fornecedor._id,
+    //categoria: categoria._id || null ,
+    //fornecedor: fornecedor._id || null,
     foto: foto
   }
 
